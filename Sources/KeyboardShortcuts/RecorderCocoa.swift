@@ -27,7 +27,7 @@ extension KeyboardShortcuts {
 	```
 	*/
 	public final class RecorderCocoa: NSSearchField, NSSearchFieldDelegate {
-		private let minimumWidth
+        private let minimumWidth: CGFloat
 		private let onChange: ((_ shortcut: Shortcut?) -> Void)?
 		private var canBecomeKey = false
 		private var eventMonitor: LocalEventMonitor?

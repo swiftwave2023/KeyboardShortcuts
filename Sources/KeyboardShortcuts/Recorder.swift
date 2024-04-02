@@ -8,12 +8,6 @@ extension KeyboardShortcuts {
         let minimumWidth: CGFloat
 		let name: Name
 		let onChange: ((_ shortcut: Shortcut?) -> Void)?
-        
-        init(minimumWidth: CGFloat = 130, name: Name, onChange: (@escaping (_: Shortcut?) -> Void)?) {
-            self.minimumWidth = minimumWidth
-            self.name = name
-            self.onChange = onChange
-        }
 
 		func makeNSView(context: Context) -> NSViewType {
             .init(minimumWidth: minimumWidth, for: name, onChange: onChange)
@@ -106,10 +100,12 @@ extension KeyboardShortcuts.Recorder<EmptyView> {
 	- Parameter onChange: Callback which will be called when the keyboard shortcut is changed/removed by the user. This can be useful when you need more control. For example, when migrating from a different keyboard shortcut solution and you need to store the keyboard shortcut somewhere yourself instead of relying on the built-in storage. However, it's strongly recommended to just rely on the built-in storage when possible.
 	*/
 	public init(
+        minimumWidth: CGFloat = 130,
 		for name: KeyboardShortcuts.Name,
 		onChange: ((KeyboardShortcuts.Shortcut?) -> Void)? = nil
 	) {
 		self.init(
+            minimumWidth: minimumWidth,
 			for: name,
 			onChange: onChange,
 			hasLabel: false
@@ -124,11 +120,13 @@ extension KeyboardShortcuts.Recorder<Text> {
 	- Parameter onChange: Callback which will be called when the keyboard shortcut is changed/removed by the user. This can be useful when you need more control. For example, when migrating from a different keyboard shortcut solution and you need to store the keyboard shortcut somewhere yourself instead of relying on the built-in storage. However, it's strongly recommended to just rely on the built-in storage when possible.
 	*/
 	public init(
+        minimumWidth: CGFloat = 130,
 		_ title: LocalizedStringKey,
 		name: KeyboardShortcuts.Name,
 		onChange: ((KeyboardShortcuts.Shortcut?) -> Void)? = nil
 	) {
 		self.init(
+            minimumWidth: minimumWidth,
 			for: name,
 			onChange: onChange,
 			hasLabel: true
@@ -146,11 +144,13 @@ extension KeyboardShortcuts.Recorder<Text> {
 	*/
 	@_disfavoredOverload
 	public init(
+        minimumWidth: CGFloat = 130,
 		_ title: String,
 		name: KeyboardShortcuts.Name,
 		onChange: ((KeyboardShortcuts.Shortcut?) -> Void)? = nil
 	) {
 		self.init(
+            minimumWidth: minimumWidth,
 			for: name,
 			onChange: onChange,
 			hasLabel: true
