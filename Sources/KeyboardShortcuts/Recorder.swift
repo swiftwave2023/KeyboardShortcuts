@@ -5,11 +5,18 @@ extension KeyboardShortcuts {
 	private struct _Recorder: NSViewRepresentable { // swiftlint:disable:this type_name
 		typealias NSViewType = RecorderCocoa
 
+        let minimumWidth: CGFloat
 		let name: Name
 		let onChange: ((_ shortcut: Shortcut?) -> Void)?
+        
+        init(minimumWidth: CGFloat = 130, name: Name, onChange: (@escaping (_: Shortcut?) -> Void)?) {
+            self.minimumWidth = minimumWidth
+            self.name = name
+            self.onChange = onChange
+        }
 
 		func makeNSView(context: Context) -> NSViewType {
-			.init(for: name, onChange: onChange)
+            .init(minimumWidth: minimumWidth, for: name, onChange: onChange)
 		}
 
 		func updateNSView(_ nsView: NSViewType, context: Context) {
@@ -40,17 +47,20 @@ extension KeyboardShortcuts {
 	```
 	*/
 	public struct Recorder<Label: View>: View { // swiftlint:disable:this type_name
+        let minimumWidth: CGFloat
 		private let name: Name
 		private let onChange: ((Shortcut?) -> Void)?
 		private let hasLabel: Bool
 		private let label: Label
 
 		init(
+            minimumWidth: CGFloat = 130,
 			for name: Name,
 			onChange: ((Shortcut?) -> Void)? = nil,
 			hasLabel: Bool,
 			@ViewBuilder label: () -> Label
 		) {
+            self.minimumWidth = minimumWidth
 			self.name = name
 			self.onChange = onChange
 			self.hasLabel = hasLabel
@@ -62,6 +72,7 @@ extension KeyboardShortcuts {
 				if #available(macOS 13, *) {
 					LabeledContent {
 						_Recorder(
+                            minimumWidth: minimumWidth,
 							name: name,
 							onChange: onChange
 						)
@@ -70,6 +81,7 @@ extension KeyboardShortcuts {
 					}
 				} else {
 					_Recorder(
+                        minimumWidth: minimumWidth,
 						name: name,
 						onChange: onChange
 					)
@@ -79,6 +91,7 @@ extension KeyboardShortcuts {
 				}
 			} else {
 				_Recorder(
+                    minimumWidth: minimumWidth,
 					name: name,
 					onChange: onChange
 				)

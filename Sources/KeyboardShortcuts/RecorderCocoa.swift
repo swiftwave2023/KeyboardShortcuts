@@ -27,7 +27,7 @@ extension KeyboardShortcuts {
 	```
 	*/
 	public final class RecorderCocoa: NSSearchField, NSSearchFieldDelegate {
-		private let minimumWidth = 130.0
+		private let minimumWidth
 		private let onChange: ((_ shortcut: Shortcut?) -> Void)?
 		private var canBecomeKey = false
 		private var eventMonitor: LocalEventMonitor?
@@ -82,9 +82,11 @@ extension KeyboardShortcuts {
 		- Parameter onChange: Callback which will be called when the keyboard shortcut is changed/removed by the user. This can be useful when you need more control. For example, when migrating from a different keyboard shortcut solution and you need to store the keyboard shortcut somewhere yourself instead of relying on the built-in storage. However, it's strongly recommended to just rely on the built-in storage when possible.
 		*/
 		public required init(
+            minimumWidth: CGFloat = 130,
 			for name: Name,
 			onChange: ((_ shortcut: Shortcut?) -> Void)? = nil
 		) {
+            self.minimumWidth = minimumWidth
 			self.shortcutName = name
 			self.onChange = onChange
 
